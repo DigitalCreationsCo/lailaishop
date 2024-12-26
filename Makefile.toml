@@ -1,0 +1,23 @@
+[tasks.dev]
+command = "trunk"
+args = ["serve"]
+
+[tasks.build]
+command = "trunk"
+args = ["build"]
+
+[tasks.build-release]
+command = "trunk"
+args = ["build", "--release"]
+
+[tasks.check]
+command = "cargo"
+args = ["check", "--target", "wasm32-unknown-unknown"]
+
+[tasks.test]
+command = "wasm-pack"
+args = ["test", "--headless", "--firefox"]
+
+[tasks.check-incompat]
+command = "cargo"
+args = ["report", "future-incompatibilities", "--id", "1"] 

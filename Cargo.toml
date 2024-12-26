@@ -1,0 +1,50 @@
+[package]
+name = "live-marketplace"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Core WebAssembly dependencies
+wasm-bindgen = "0.2.89"
+wasm-bindgen-futures = "0.4.39"
+web-sys = { version = "0.3.66", features = [
+    "HtmlVideoElement",
+    "MediaStream",
+    "MediaStreamConstraints",
+    "Navigator",
+    "MediaDevices"
+]}
+js-sys = "0.3.66"
+
+# Yew and frontend dependencies
+yew = { version = "0.21", features = ["csr"] }
+yew-router = "0.18"
+gloo = "0.10"
+yew-hooks = "0.3"
+
+# Async runtime and networking
+tokio = { version = "1.35", features = ["rt", "macros"] }
+futures = "0.3.30"
+
+# Serialization
+serde = { version = "1.0.193", features = ["derive"] }
+serde_json = "1.0.108"
+
+# HTTP client
+reqwest = { version = "0.11.27", default-features = false, features = ["json", "rustls-tls"] }
+
+# Utilities
+log = "0.4.20"
+wasm-logger = "0.2.0"
+chrono = { version = "0.4.31", features = ["serde", "wasmbind"] }
+uuid = { version = "1.6.1", features = ["v4", "js"] }
+getrandom = { version = "0.2.11", features = ["js"] }
+anyhow = "1.0.75"
+
+# Database (only include when not targeting wasm32)
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+sqlx = { version = "0.7.3", features = ["runtime-tokio-native-tls", "postgres", "chrono"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.2.11", features = ["js"] }
+reqwest = { version = "0.11.27", default-features = false, features = ["json", "rustls-tls-webpki-roots"] }
